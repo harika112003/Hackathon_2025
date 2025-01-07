@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Hub</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header {
+            width: 97%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .header .nav-bar {
+            display: flex;
+        }
+
+        .header .nav-bar button {
+            background: #fff;
+            color: #4e54c8;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .header .nav-bar button:hover {
+            background: #4e54c8;
+            color: #fff;
+        }
+
+        .welcome {
+            text-align: right;
+            margin-top: 100px;
+        }
+
+        .welcome h1 {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        .welcome p {
+            font-size: 1.2rem;
+            margin: 10px 0 0;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: #000;
+        }
+
+        .form-container input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            width: 50%;
+            padding: 10px;
+            background-color: #4e54c8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #2c2f7a;
+        }
+        
+
+        @media (max-width: 480px) {
+            .welcome h1 {
+                font-size: 2rem;
+            }
+
+            .welcome p {
+                font-size: 1rem;
+            }
+
+            .header .nav-bar button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <script>
+        let users = [];
+        let loggedIn = false;
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            document.getElementById(pageId).style.display = 'block';
+
+            if (pageId === 'home-page' && loggedIn) {
+                document.querySelector('.nav-bar').style.display = 'none';
+            } else {
+                document.querySelector('.nav-bar').style.display = 'flex';
+            }
+        }
+
+        function signup() {
+            const email = document.getElementById('signup-email').value;
+            const username = document.getElementById('signup-username').value;
+            const password = document.getElementById('signup-password').value;
+
+            if (email && username && password) {
+                users.push({ email, username, password });
+                alert('Successfully signed up!');
+                document.getElementById('signup-email').value = '';
+                document.getElementById('signup-username').value = '';
+                document.getElementById('signup-password').value = '';
+                showPage('first-page');
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const user = users.find(user => user.email === email && user.password === password);
+            if (user) {
+                alert('Login successful!');
+                document.getElementById('profile-username').innerText = user.username;
+                document.getElementById('login-email').value = '';
+                document.getElementById('login-password').value = '';
+                loggedIn = true;
+                showPage('home-page');
+            } else {
+                alert('Incorrect email or password.');
+            }
+        }
+
+        function updatePassword() {
+            const email = document.getElementById('forgot-email').value;
+            const newPassword = document.getElementById('forgot-password').value;
+
+            const user = users.find(user => user.email === email);
+            if (user) {
+                user.password = newPassword;
+                alert('Password updated successfully!');
+                document.getElementById('forgot-email').value = '';
+                document.getElementById('forgot-password').value = '';
+                showPage('first-page');
+            } else {
+                alert('User not found.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('first-page');
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="https://icons.veryicon.com/png/o/miscellaneous/home-school-icon/resource-center-2.png" alt="Logo">
+            <span>Resource Hub</span>
+        </div>
+        <div class="nav-bar">
+            <button onclick="showPage('login-page')">Login</button>
+            <button onclick="showPage('signup-page')">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- First Page -->
+    <div id="first-page" class="page">
+        <div class="welcome">
+            <h1>Welcome to Resource Hub</h1>
+            <p>Your gateway to awesome features awaits.</p>
+        </div>
+    </div>
+
+    <!-- Sign Up Page -->
+    <div id="signup-page" class="page" style="display: none;">
+        <div class="form-container">
+            <h2>Sign Up</h2>
+            <input type="email" id="signup-email" placeholder="Email">
+            <input type="text" id="signup-username" placeholder="Username">
+            <input type="password" id="signup-password" placeholder="Password">
+            <button onclick="signup()">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page" style="display: none;">
+        <div class="form-container">
+            <h2>Log In</h2>
+            <input type="email" id="login-email" placeholder="Email">
+            <input type="password" id="login-password" placeholder="Password">
+            <button onclick="login()">Log In</button>
+            <button onclick="showPage('forgot-password-page')" style="margin-top: 10px;">Forgot Password?</button>
+        </div>
+    </div>
+   
+
+    <!-- Forgot Password Page -->
+    <div id="forgot-password-page" class="page" style="display: none;">
+        <div class="form-container">
+            <h2>Forgot Password</h2>
+            <input type="email" id="forgot-email" placeholder="Email">
+            <input type="password" id="forgot-password" placeholder="Password">
+            <button onclick="updatePassword()">Update</button>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page" style="display: none;">
+        <div class="container">
+            <h1>Welcome, <span id="profile-username"></span>!</h1>
+            <p>Ready to Boost Up!</p>
+        </div>
+    </div>
+</body>
+</html>
