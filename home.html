@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .nav-bar {
+            position: relative;
+        }
+
+        .nav-bar button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .nav-bar ul {
+            display: none;
+            position: absolute;
+            background-color: white;
+            color: black;
+            list-style: none;
+            margin: 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            top: 30px;
+            left: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-bar ul li {
+            margin: 5px 0;
+        }
+
+        .nav-bar ul li a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            padding: 5px;
+        }
+
+        .nav-bar ul li a:hover {
+            background-color: #ddd;
+        }
+
+        .profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            background-color: white;
+            color: black;
+            list-style: none;
+            margin: 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            top: 40px;
+            right: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-dropdown li {
+            margin: 5px 0;
+        }
+
+        .profile-dropdown li a {
+            text-decoration: none;
+            color: black;
+            display: block;
+            padding: 5px;
+        }
+
+        .profile-dropdown li a:hover {
+            background-color: #ddd;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        form button {
+            padding: 10px 15px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .mini-screen {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            display: none;
+        }
+
+        .mini-screen h2 {
+            margin-top: 0;
+        }
+
+        .mini-screen button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <button onclick="toggleNavMenu()">☰ Navigation</button>
+            <ul id="nav-menu">
+                <li><a href="#">Aptitude Questions</a></li>
+                <li><a href="#">Programming Questions</a></li>
+                <li><a href="#">Company Specific Questions</a></li>
+            </ul>
+        </div>
+        <div class="profile">
+            <img src="https://via.placeholder.com/30" alt="Profile Picture">
+            <button onclick="toggleProfileMenu()" id="profile-btn">Profile</button>
+            <ul id="profile-menu">
+                <li><a href="#" onclick="viewProfile()">View Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <h1>Enter Your Details</h1>
+        <form id="user-form" onsubmit="submitForm(event)">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="contact">Contact:</label>
+                <input type="text" id="contact" name="contact" required>
+            </div>
+            <div>
+                <label for="github">GitHub Profile:</label>
+                <input type="url" id="github" name="github" required>
+            </div>
+            <div>
+                <label for="nationality">Nationality:</label>
+                <select id="nationality" name="nationality" required>
+                    <option value="">Select your nationality</option>
+                    <option value="usa" style="background: linear-gradient(to right, red, white, blue);">USA</option>
+                    <option value="india" style="background: linear-gradient(to right, orange, white, green);">India</option>
+                    <option value="canada" style="background: linear-gradient(to right, red, white, red);">Canada</option>
+                </select>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </main>
+
+    <div class="mini-screen" id="profile-view">
+        <button onclick="closeProfileView()">Close</button>
+        <h2>Profile Details</h2>
+        <div id="profile-content"></div>
+    </div>
+<script>
+    function toggleNavMenu() {
+        const menu = document.getElementById('nav-menu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function toggleProfileMenu() {
+        const menu = document.getElementById('profile-menu');
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const contact = document.getElementById('contact').value;
+        const github = document.getElementById('github').value;
+        const nationality = document.getElementById('nationality').value;
+
+        const userDetails = `
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Contact:</strong> ${contact}</p>
+            <p><strong>GitHub:</strong> <a href="${github}" target="_blank">${github}</a></p>
+            <p><strong>Nationality:</strong> ${nationality}</p>
+        `;
+
+        document.getElementById('profile-content').innerHTML = userDetails;
+        document.getElementById('user-form').style.display = 'none';
+    }
+
+    function viewProfile() {
+        document.getElementById('profile-view').style.display = 'block';
+    }
+
+    function closeProfileView() {
+        document.getElementById('profile-view').style.display = 'none';
+    }
+
+    function logout() {
+        alert('Logged out!');
+        location.reload();
+    }
+</script>
+
+    
+</body>
+</html>
